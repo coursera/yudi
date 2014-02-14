@@ -32,5 +32,5 @@ exports.create = (file, i18nResult) ->
 exports.remove = (file, i18nResult) ->
   {root} = toBundlePaths(file)
   nlsGlob = root.replace("nls/", "nls/**/")
-  paths = glob.sync(globPath, cb)
+  paths = glob.sync(nlsGlob)
   _.map(paths, (p) -> {path: p})
