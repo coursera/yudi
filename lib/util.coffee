@@ -28,11 +28,3 @@ exports.extractAllMatches = (str, regex, groups...) ->
       else
         result.push matches[0]
   result
-
-exports.getNNeighbors = (arr, index, n) ->
-  if index >= 0
-    min = Math.max(index - n, 0)
-    max = Math.min(index + n, arr.length)
-    arr[min..max]
-  else
-    []

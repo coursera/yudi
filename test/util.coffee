@@ -118,29 +118,3 @@ describe "Utility Functions", ->
     it "should be able to extract multiple groups from each string", ->
       regex = new RegExp("(#{@token})(#{@token})", 'g')
       checkMatches(util.extractAllMatches(@str, regex, 1, 2), @count, @str)
-
-  describe "getNNeighbors", ->
-    before ->
-      @arr = randArr()
-      @index = randInt(@arr.length)
-      @mid = Math.floor(@arr.length/2)
-
-    check = (a1, a2) -> expect(a1).to.deep.equal a2
-
-    it "nearest N Neighbors of 0 should be itself", ->
-      check(@arr[@index], util.getNNeighbors(@arr, @index, 0)[0])
-    it "nearest N Neighbors of l should be the whole array", ->
-      check(@arr, util.getNNeighbors(@arr, 0, @arr.length))
-      check(@arr, util.getNNeighbors(@arr, @arr.length, @arr.length))
-      check(@arr, util.getNNeighbors(@arr, @mid, @mid))
-    it "should extract n entries both before and after index", ->
-      for index in [0...@arr.length]
-        for n in [0...@arr.length]
-          neighbors = util.getNNeighbors(@arr, index, n)
-          expect(neighbors.length).to.at.most 2*n + 1
-          expect(neighbors.length).to.at.least 1
-          expect(neighbors).to.contain @arr[index]
-          k = 0
-          for i in [index-n..index+n]
-            if 0 <= i < @arr.length
-              expect(@arr[i]).to.equal neighbors[k++]
