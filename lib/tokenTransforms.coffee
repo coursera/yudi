@@ -20,7 +20,7 @@ selectEscapeSymbol = (s) ->
 stringifyInterpolations = (str) ->
   interpolations = []
   interpolations.push(match[1]) while match = interpolation.exec(str)
-  keys = ("\"#{interp}\":#{interp}" for interp in interpolations)
+  keys = ("\"#{escapeQuotes(interp)}\":#{interp}" for interp in interpolations)
   if keys.length then "{#{keys.join(", ")}}" else ""
 
 module.exports =
