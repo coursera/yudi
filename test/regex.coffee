@@ -25,8 +25,8 @@ describe "Regular Expressions", ->
       '_t(a.c("aoeu"))': []
       '_t("aeo\')': []
       '_t("aeo")': ["aeo"]
-      '_t("aeo") and _t("aeo")': ["aeo", "aeo"]
-      "var a = {k1: _t(\"t1\"), k2: _t(\"t2\"), k3: _t(\"t3\"), k4: _t(\"t4\"), k5: _t(\"t5\")": ["t1", "t2", "t3", "t4", "t5"]
+      '_t("aeo") and _t(\'aeo\')': ["aeo", "aeo"]
+      "var a = {k1: _t(\"t1\"), k2: _t(\'t2\'), k3: _t(\"t3\"), k4: _t(\'t4\'), k5: _t(\"t5\")": ["t1", "t2", "t3", "t4", "t5"]
     checkMatches(map, regex.wrappedStringInCode, 2)
 
   it "wrappedAnything", ->

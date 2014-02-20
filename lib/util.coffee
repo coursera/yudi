@@ -13,11 +13,6 @@ exports.escapeQuotes = (str) -> str.replace(/"/g, "\\\"")
 exports.unescapeQuotes = (str) -> str.replace(/\\"/g, "\"")
 exports.stripQuotes = (str) -> str.replace(/^"(.+)"$/g, "$1")
 
-exports.listToObj = (list) ->
-  obj = {}
-  obj[item] = item for item in list
-  obj
-
 exports.extractAllMatches = (str, regex, groups...) ->
   result = []
   while matches = regex.exec(str)

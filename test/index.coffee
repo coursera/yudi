@@ -3,7 +3,7 @@ fs = require("fs")
 {expect} = require("chai")
 
 {getTokens, getTranslatableTokens} = require("../lib/tokens")
-{internationalize, uninternationalize} = require("../lib/sourceTransforms")
+{internationalize, uninternationalize} = require("../lib")
 {
   isAlreadyWrapped
   wrappedString
@@ -17,12 +17,13 @@ fs = require("fs")
   extractAllMatches
 } = require("../lib/util")
 
-describe "sourceTransforms", ->
+describe "(un)internationalize", ->
   before (done) ->
     fs.readFile "#{__dirname}/jade/test.jade", "utf-8", (e, d) =>
       @jadeSource = d
       @lines = (@jadeSource ? "").split("\n")
       @options =
+        tokens: true
         attrs: [
           "data-default-message"
           "data-inflight-message"
@@ -34,6 +35,9 @@ describe "sourceTransforms", ->
         ]
       @i18nResult = internationalize(@jadeSource, @options)
       done(e)
+
+  it "internationalized source with or without the tokens options should be the same", ->
+    expect(@i18nResult.source).to.equal internationalize(@jadeSource, _.omit(@options, 'tokens'))
 
   it "internationalized tokens should have correct line numbers", ->
     resultLines = @i18nResult.source.split("\n")
@@ -58,7 +62,6 @@ describe "sourceTransforms", ->
     collectedTranslationKeys = _.pluck(@i18nResult.tokens, "val")
     expect(collectedTranslationKeys).to.deep.equal wrappedTranslationKeys
 
-
   it "uninternationalize(internationalize(str)) should equal str", ->
-    str = uninternationalize(@i18nResult.source, @options).source
+    str = uninternationalize(@i18nResult.source, @options)
     expect(@jadeSource).to.equal str

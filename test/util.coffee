@@ -76,27 +76,6 @@ describe "Utility Functions", ->
       check "this is a simple test with 'quotes'"
       check 'this is a simple test with "quotes"'
 
-  describe "listToObj", ->
-    before ->
-      @list = randArr()
-      @obj = util.listToObj(@list)
-      @duplist = @list.concat(@list)
-      @dupobj = util.listToObj(@duplist)
-
-    it "should convert a list to an object correctly", ->
-      obj = _.object(_.zip(@list, @list))
-      expect(obj).to.deep.equal @obj
-
-    it "keys in object should be equivalent to unique elements in the input list", ->
-      expect(_.keys(@obj)).to.have.members @list
-      expect(_.keys(@dupobj)).to.have.members @list
-      expect(_.keys(@dupobj)).to.have.members _.uniq(@duplist)
-
-    it "values in object should be equivalent to unique elements in the input list", ->
-      expect(_.values(@obj)).to.have.members @list
-      expect(_.values(@dupobj)).to.have.members @list
-      expect(_.values(@dupobj)).to.have.members _.uniq(@duplist)
-
   describe "extractAllMatches", ->
     before ->
       @token = randStr(randInt(10))
