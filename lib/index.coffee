@@ -38,7 +38,7 @@ internationalize = (source, options = {}) ->
         internationalized.push {
           line: token.line
           type: token.type
-          val: unescapeQuotes(matches[2])
+          val: unescapeQuotes(matches[3])
         }
     else
       record = false

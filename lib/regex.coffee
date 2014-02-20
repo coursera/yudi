@@ -10,7 +10,9 @@ module.exports = {
   ///g
   wrappedStringInCode: ///
     _t\(
-      (["'])(.+?)\1 # key string (non greedy, group 1)
+      (["'])
+        (.+?) # key string (non greedy, group 2)
+      \1
     \)
   ///g
   wrappedAnything: ///
@@ -25,10 +27,12 @@ module.exports = {
     # ^\s*
     ([\#!]\{)? # only present for wrapped text tokens (optional, group 1)
       _t\(
-        "(.+)" # key string (group 2)
-        (,\s\{.+\})? # interpolation hash (optional, group 3)
+        (["'])
+          (.+) # key string (group 3)
+        \2
+        (,\s\{.+\})? # interpolation hash (optional, group 4)
       \)
-    (\})? # only present for wrapped text tokens (optional, group 4)
+    (\})? # only present for wrapped text tokens
     (\s|&nbsp;)*$ # trailing space
   ///
   ignoreText: testRegex ///
@@ -55,7 +59,7 @@ module.exports = {
   isWrappedInterpolationOnly: testRegex ///
     ^[\W\d_]*
     [\#!]\{_t\(
-      (?!") # not a string translation key
+      (?!["']) # not a string translation key
       .+ # {interpolation}
     \)\}
     [\W\d_]*$

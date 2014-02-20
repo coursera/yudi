@@ -11,7 +11,7 @@ exports.replaceLastOccurrence = (str, pattern, replacement) ->
 
 exports.escapeQuotes = (str) -> str.replace(/"/g, "\\\"")
 exports.unescapeQuotes = (str) -> str.replace(/\\"/g, "\"")
-exports.stripQuotes = (str) -> str.replace(/^"(.+)"$/g, "$1")
+exports.stripQuotes = (str) -> str.replace(/^(["'])(.+)\1$/g, "$2")
 
 exports.extractAllMatches = (str, regex, groups...) ->
   result = []

@@ -54,7 +54,7 @@ describe "(un)internationalize", ->
     for token in getTranslatableTokens(@i18nResult.source, @options)
       if token.type isnt "code" and isAlreadyWrapped(token.val)
         matches = wrappedString.exec(token.val)
-        wrappedTranslationKeys.push unescapeQuotes(matches[2]) if matches?.length
+        wrappedTranslationKeys.push unescapeQuotes(matches[3]) if matches?.length
       if token.type is "code"
         matches = extractAllMatches(token.val, wrappedStringInCode, 2)
         wrappedTranslationKeys = wrappedTranslationKeys.concat(matches)
