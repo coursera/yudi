@@ -7,7 +7,7 @@ tokenTransforms = require("./tokenTransforms")
   wrappedString
   wrappedStringInCode
   ignoreText
-  isDoubleQuotedString
+  isStringLiteral
 } = require("./regex")
 {
   replaceLastOccurrence
@@ -49,7 +49,7 @@ internationalize = (source, options = {}) ->
         lines[token.line] = replaceLastOccurrence(currentLine, trimmed, wrapped)
 
       if token.type is "attr"
-        record = isDoubleQuotedString(trimmed)
+        record = isStringLiteral(trimmed)
         wrapped = tokenTransforms.attr.internationalize(trimmed)
         # assuming there are no spaces between the attr name and the value
         lines[token.line] = currentLine.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}")

@@ -40,7 +40,7 @@ module.exports = {
     )* # 0 or more, so including empty strings
     $
   ///
-  isDoubleQuotedString: testRegex /^\s*"[^"]+"\s*$/
+  isStringLiteral: testRegex /^\s*(["']).+\1\s*$/
 
   isAlreadyWrapped: testRegex /_t\(/
   containsHtml: testRegex /<[^>]+>/

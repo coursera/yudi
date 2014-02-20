@@ -11,7 +11,7 @@ describe "tokenTransforms", ->
         '': ''
         '""': '""'
         '"aoeu"': '_t("aoeu")'
-        '"longer string"': '_t("longer string")'
+        "'longer string'": "_t('longer string')"
         'disabled': 'disabled'
         'object.value()': 'object.value()'
         'something ? slightly.more("") : complicated': 'something ? slightly.more("") : complicated'

@@ -38,7 +38,7 @@ describe "Regular Expressions", ->
       '!{_t("aeo")}': ['"aeo"']
     checkMatches(map, regex.wrappedAnything, 2)
 
-  checkTrueFalse = (f, strs) ->
+  checkTrue = (f, strs) ->
     for str in strs
       expect(f(str)).to.be.true
 
@@ -53,7 +53,7 @@ describe "Regular Expressions", ->
       '_t("#{a} and #{b}", {"a":a,"b":b}) &nbsp;'
       '#{_t("#{a} and #{b}", {"a":a,"b":b})} &nbsp;  '
     ]
-    checkTrueFalse(((s) -> regex.wrappedString.test(s)), strs)
+    checkTrue(((s) -> regex.wrappedString.test(s)), strs)
 
   it "ignoreText", ->
     strs = [
@@ -67,16 +67,16 @@ describe "Regular Expressions", ->
       "&nbsp; &nbsp; @#$!@#}  "
       "  &nbsp; &nbsp; @#$!@#}  "
     ]
-    checkTrueFalse(regex.ignoreText, strs)
+    checkTrue(regex.ignoreText, strs)
 
-  it "isDoubleQuotedString", ->
+  it "isStringLiteral", ->
     strs = [
       '"s"'
-      '"a etu at"'
+      "'a etu at'"
       '"a etu at"  '
-      '   "a etu at"  '
+      "   'a etu at'  "
     ]
-    checkTrueFalse(regex.isDoubleQuotedString, strs)
+    checkTrue(regex.isStringLiteral, strs)
 
   it "isAlreadyWrapped", ->
     strs = [
@@ -84,7 +84,7 @@ describe "Regular Expressions", ->
       '_t("s") + _t("s")'
       '#{_t("s")}'
     ]
-    checkTrueFalse(regex.isAlreadyWrapped, strs)
+    checkTrue(regex.isAlreadyWrapped, strs)
 
   it "containsHtml", ->
     strs = [
@@ -92,14 +92,14 @@ describe "Regular Expressions", ->
       '<a href="">a</a>'
       '<a href="">a</a> aoetunsh'
     ]
-    checkTrueFalse(regex.containsHtml, strs)
+    checkTrue(regex.containsHtml, strs)
 
   it "containsHtmlEntity", ->
     strs = [
       '&nbsp;'
       '&nbsp; aoeu &quot;'
     ]
-    checkTrueFalse(regex.containsHtmlEntity, strs)
+    checkTrue(regex.containsHtmlEntity, strs)
 
   it "isInterpolationOnly", ->
     strs = [
@@ -110,7 +110,7 @@ describe "Regular Expressions", ->
       ' @#$! #{var} '
       ' 324 #{var.ou()} 234'
     ]
-    checkTrueFalse(regex.isInterpolationOnly, strs)
+    checkTrue(regex.isInterpolationOnly, strs)
 
   it "isWrappedInterpolationOnly", ->
     strs = [
@@ -120,4 +120,4 @@ describe "Regular Expressions", ->
       ' @#$! #{_t(var)} '
       ' 324 #{_t(var.ou())} 234'
     ]
-    checkTrueFalse(regex.isWrappedInterpolationOnly, strs)
+    checkTrue(regex.isWrappedInterpolationOnly, strs)

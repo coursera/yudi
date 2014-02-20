@@ -6,7 +6,7 @@
   interpolation
   wrappedString
   wrappedAnything
-  isDoubleQuotedString
+  isStringLiteral
   containsHtml
   containsHtmlEntity
   isInterpolationOnly
@@ -25,7 +25,7 @@ stringifyInterpolations = (str) ->
 
 module.exports =
   attr:
-    internationalize: (str) -> if isDoubleQuotedString(str) then "_t(#{str})" else str
+    internationalize: (str) -> if isStringLiteral(str) then "_t(#{str})" else str
     uninternationalize: (str) -> str.replace(wrappedAnything, "$2")
 
   text:
