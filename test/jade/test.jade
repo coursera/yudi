@@ -22,6 +22,13 @@ div.btn(
     span &nbsp; look! there's a trailing space&nbsp;
     span &nbsp; look! there's more space&nbsp;&nbsp;
 
+    p
+      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hoc loco discipulos quaerere videtur, ut, qui asoti esse velint, philosophi ante fiant. Sed ne, dum huic obsequor, vobis molestus sim. In qua quid est boni praeter summam voluptatem, et eam sempiternam? Nihil sane.
+      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quorum altera prosunt, nocent altera. Conferam avum tuum Drusum cum C. Cur id non ita fit? Duo Reges: constructio interrete. Equidem etiam Epicurum, in physicis quidem, Democriteum puto. At ille non pertimuit saneque fidenter: Istis quidem ipsis verbis, inquit; Scio enim esse quosdam, qui quavis lingua philosophari possint; At enim hic etiam dolore. Scaevolam M.
+    p.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut placet, inquit, etsi enim illud erat aptius, aequum cuique concedere. Scio enim esse quosdam, qui quavis lingua philosophari possint; An eum discere ea mavis, quae cum plane perdidiceriti nihil sciat? Haec mihi videtur delicatior, ut ita dicam, molliorque ratio, quam virtutis vis gravitasque postulat. Sed ad bona praeterita redeamus. Quis istum dolorem timet?
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ego quoque, inquit, didicerim libentius si quid attuleris, quam te reprehenderim. Nunc de hominis summo bono quaeritur; Itaque quantum adiit periculum! ad honestatem enim illum omnem conatum suum referebat, non ad voluptatem. Occultum facinus esse potuerit, gaudebit;
+
     attrtest(
       data-default-message="this should be wrapped and recorded 1"
       data-inflight-message="this should be wrapped and recorded 2"
@@ -54,6 +61,7 @@ div.btn(
       | pipes
       strong with #{annoying}
       | interpolations annoying
+      a(title=course.get('signatureTrackStatus')['signature_track_duration_left']) #{course.get('signatureTrackStatus')['signature_track_duration_left']} left
 
 
 - var textMap = {LEARN_FOR_FREE: _t('Learn "for" Free'), VIEW_CLASS_ARCHIVE: _t("View class archive"), GO_TO_CLASS: _t("Go to class"), VIEW_COURSE_RECORD: _t("View course record"), COUNTDOWN: _t(course.getStartCountdown())};

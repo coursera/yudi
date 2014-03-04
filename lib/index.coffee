@@ -1,6 +1,6 @@
 _ = require("lodash")
 tokenTransforms = require("./tokenTransforms")
-{getTranslatableTokens} = require("./tokens")
+getTranslatableTokens = require("./tokens")
 {
   isAlreadyWrapped
   isInterpolationOnly

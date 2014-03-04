@@ -2,26 +2,22 @@ _ = require("lodash")
 fs = require("fs")
 {expect} = require("chai")
 
-{getTokens, getTranslatableTokens} = require("../lib/tokens")
+getTranslatableTokens = require("../lib/tokens")
+
+file = "#{__dirname}/jade/test.jade"
 
 describe "tokens", ->
   before (done) ->
-    fs.readFile "#{__dirname}/jade/test.jade", "utf-8", (e, d) =>
+    fs.readFile file, "utf-8", (e, d) =>
       @jadeSource = d
       @lines = (@jadeSource ? "").split("\n")
-      @tokens = getTokens(@jadeSource)
-      @translatableTokens = getTranslatableTokens(@jadeSource)
+      @tokens = getTranslatableTokens(@jadeSource)
       done(e)
 
   describe "getTranslatableTokens", ->
-    it "results are all tokens", ->
-      tokenValues = _.pluck(@tokens, "val")
-      translatableTokensValues = _.pluck(@translatableTokens, "val")
-      for val in translatableTokensValues
-        expect(tokenValues).to.contain val
 
     it "results should not contain attr tokens if attrs list is not passed in through options", ->
-      attrsTokens = _.filter(@translatableTokens, (token) -> token.type is "attr")
+      attrsTokens = _.filter(@tokens, (token) -> token.type is "attr")
       expect(attrsTokens).to.be.empty
 
     it "results should not contain attr tokens if no attribute in option.attrs exists", ->
@@ -36,7 +32,6 @@ describe "tokens", ->
       expect(attrsTokens).to.not.be.empty
 
     it "correct for line number shifts due to multiline tag + attrs declarations", ->
-      for token in @translatableTokens
+      for token in @tokens
         str = if token.type is "attr" then token.name else token.val
         expect(@lines[token.line]).to.contain str
-

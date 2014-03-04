@@ -1,53 +1,50 @@
-_ = require("lodash")
-Lexer = require("jade").Lexer
+fs = require "fs"
+_ = require "lodash"
+{Parser, nodes} = require("jade")
+{Text, Code, Comment} = nodes
 
 indexOf = (lines, pattern, start) ->
   for line, i in lines[start..]
     return start + i if line.indexOf(pattern) >= 0
   return -1
 
-getTokens = (source) ->
-  lexer = new Lexer(source)
-  tokens = []
-  token = lexer.advance()
-  while token?.type isnt "eos"
-    # jade linenumbers are 1 based
-    token.line -= 1
-    tokens.push token
-    token = lexer.advance()
-  tokens
-
-extractAttrs = (token, attrs = []) ->
-  _.chain(token.attrs)
+extractAttrs = (node, attrs = []) ->
+  _.chain(node.attrs)
   .filter((attr) -> _.contains(attrs, attr.name))
-  .map(({name, val}) -> {type: "attr", line: token.line, name, val})
+  .map(({name, val}) -> {type: "attr", line: node.line, name, val})
   .value()
 
-selectType = (tokens, type) ->
-  _.filter(tokens, (token) -> token.type is type)
+traverse = (node, tokens, options) ->
+  attrs = extractAttrs(node, options.attrs)
 
-selectAttrs = (tokens, attrs) ->
-  _.chain(tokens)
-    .filter((token) -> token.type is "attrs" and not _.isEmpty(token.attrs))
-    .map((token) -> extractAttrs(token, attrs))
-    .flatten()
-    .value()
+  children = node.nodes or node.block?.nodes
+  childrenTokens = _.reduce(children, (memo, childNode) ->
+    memo.concat(traverse(childNode, memo, options))
+  , [])
 
-getTranslatableTokens = (source, options = {}) ->
+  if node.val and not (node instanceof Comment)
+    if node instanceof Text
+      type = "text"
+    else if node instanceof Code
+      type = "code"
+    token = {val: node.val, line:node.line, type: type} if type
+
+  _.compact(_.union(tokens, attrs, childrenTokens, [token]))
+
+module.exports = (source, options = {}) ->
   lines = source.split("\n")
-  tokens = getTokens(source)
-
-  texts = selectType(tokens, "text")
-  codes = selectType(tokens, "code")
-  textAttrs = selectAttrs(tokens, options.attrs)
+  parser = new Parser(source)
+  ast = parser.parse()
+  tokens = traverse(ast, [], options)
 
   # correct text attr line numbers since multilined attributes will all
   # correspond to the same line due to the Lexer
-  for attr, i in textAttrs
-    line = lines[attr.line]
-    if line.indexOf(attr.name) < 0
-      attr.line = indexOf(lines, attr.name, attr.line)
+  for node in tokens
+    # jade linenumbers are 1 based
+    node.line -= 1
+    if node.type is "attr"
+      line = lines[node.line]
+      if line.indexOf(node.name) < 0
+        node.line = indexOf(lines, node.name, node.line)
 
-  _.sortBy(texts.concat(textAttrs).concat(codes), "line")
-
-module.exports = {getTokens, getTranslatableTokens}
+  _.sortBy(tokens, "line")

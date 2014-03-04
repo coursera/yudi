@@ -109,6 +109,7 @@ describe "Regular Expressions", ->
       '  #{_t(var)}  '
       ' @#$! #{var} '
       ' 324 #{var.ou()} 234'
+      ' - $#{price}'
     ]
     checkTrue(regex.isInterpolationOnly, strs)
 
