@@ -16,9 +16,9 @@ getTranslatableTokens = require("./tokens")
   stripQuotes
 } = require("./util")
 
-internationalize = (source, filename, options = {}) ->
+internationalize = (source, options = {}) ->
   lines = source.split("\n")
-  tokens = getTranslatableTokens(source, filename, options)
+  tokens = getTranslatableTokens(source, options)
   internationalized = []
 
   for token in tokens
@@ -67,9 +67,9 @@ internationalize = (source, filename, options = {}) ->
   else
     return source
 
-uninternationalize = (source, filename, options = {}) ->
+uninternationalize = (source, options = {}) ->
   lines = source.split("\n")
-  tokens = getTranslatableTokens(source, filename, options)
+  tokens = getTranslatableTokens(source, options)
   for token in tokens
     trimmed = token.val.trim()
     line = lines[token.line]

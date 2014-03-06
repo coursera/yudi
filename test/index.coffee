@@ -29,6 +29,7 @@ describe "(un)internationalize", ->
     @i18nSource = readFile(i18nFilename)
     @lines = (@jadeSource ? "").split("\n")
     @options =
+      filename: filename
       tokens: true
       attrs: [
         "data-default-message"
@@ -39,16 +40,15 @@ describe "(un)internationalize", ->
         "data-tooltip"
         "placeholder"
       ]
-    @i18nResult = internationalize(@jadeSource, filename, @options)
-    # fs.writeFileSync(i18nFilename, @i18nResult.source, 'utf-8')
-    @i18nResult2 = internationalize(@i18nResult.source, filename, @options)
+    @i18nResult = internationalize(@jadeSource, @options)
+    @i18nResult2 = internationalize(@i18nResult.source, @options)
     @bundle = requirejs("#{__dirname}/jade/nls/root/test.jade.js")
 
   it "internationalize result of the original source and internationalize result of the internationalized source shoud be the same", ->
     expect(@i18nResult).to.deep.equal @i18nResult2
 
   it "internationalized source with or without the tokens options should be the same", ->
-    expect(@i18nResult.source).to.equal internationalize(@jadeSource, filename, _.omit(@options, 'tokens'))
+    expect(@i18nResult.source).to.equal internationalize(@jadeSource, _.omit(@options, 'tokens'))
 
   it "internationalized result tokens should match the nls bundle", ->
     expected = _.keys(@bundle).sort()
@@ -73,7 +73,7 @@ describe "(un)internationalize", ->
 
   it "translation keys collected from an internationalized source and from an uninternationalized files should be identical", ->
     wrappedTranslationKeys = []
-    for token in getTranslatableTokens(@i18nResult.source, filename, @options)
+    for token in getTranslatableTokens(@i18nResult.source, @options)
       if token.type isnt "code" and isAlreadyWrapped(token.val)
         matches = wrappedString.exec(token.val)
         wrappedTranslationKeys.push unescapeQuotes(matches[3]) if matches?.length
@@ -86,21 +86,21 @@ describe "(un)internationalize", ->
 
 
   it "internationalize(original source) should equal to internationalized source", ->
-    str = internationalize(@jadeSource, filename, @options).source
+    str = internationalize(@jadeSource, @options).source
     expect(str).to.equal @i18nSource
 
   it "internationalize(internationalized source) should equal to internationalized source", ->
-    str = internationalize(@i18nSource, i18nFilename, @options).source
+    str = internationalize(@i18nSource, _.extend(@options, i18nFilename)).source
     expect(str).to.equal @i18nSource
 
   it "uninternationalize(internationalized source) should equal to original source", ->
-    str = uninternationalize(@i18nSource, i18nFilename, @options)
+    str = uninternationalize(@i18nSource, _.extend(@options, i18nFilename))
     expect(str).to.equal @jadeSource
 
   it "uninternationalize(original source) should equal to original source", ->
-    str = uninternationalize(@jadeSource, filename, @options)
+    str = uninternationalize(@jadeSource, @options)
     expect(str).to.equal @jadeSource
 
   it "uninternationalize(internationalize(str)) should equal str", ->
-    str = uninternationalize(@i18nResult.source, filename, @options)
+    str = uninternationalize(@i18nResult.source, @options)
     expect(str).to.equal @jadeSource

@@ -14,19 +14,19 @@ extractAttrs = (node, attrs = []) ->
   .map(({name, val}) -> {type: "attr", line: node.line, name, val})
   .value()
 
-isInclude = (node, filename) ->
+isInclude = (node, options) ->
   if 'filename' of node
-    node.filename isnt filename
+    node.filename isnt options.filename
   else
     false
 
-traverse = (node, tokens, filename, options) ->
-  return [] if isInclude(node, filename)
+traverse = (node, tokens, options) ->
+  return [] if isInclude(node, options)
   attrs = extractAttrs(node, options.attrs)
 
   children = node.nodes or node.block?.nodes
   childrenTokens = _.reduce(children, (memo, childNode) ->
-    memo.concat(traverse(childNode, memo, filename, options))
+    memo.concat(traverse(childNode, memo, options))
   , [])
 
   if node.val and not (node instanceof Comment)
@@ -38,11 +38,11 @@ traverse = (node, tokens, filename, options) ->
 
   _.compact(_.union(tokens, attrs, childrenTokens, [token]))
 
-module.exports = (source, filename, options = {}) ->
+module.exports = (source, options = {}) ->
   lines = source.split("\n")
-  parser = new Parser(source, filename, options)
+  parser = new Parser(source, options.filename, options)
   ast = parser.parse()
-  tokens = traverse(ast, [], filename, options)
+  tokens = traverse(ast, [], options)
 
   # correct text attr line numbers since multilined attributes will all
   # correspond to the same line due to the Lexer

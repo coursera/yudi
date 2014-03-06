@@ -9,20 +9,20 @@ Yudi collects strings from 3 sources:
 * any *string literal* wrapped with `_t("...")` in any escaped JavaScript code within the jade source
 
 ## Usage
-* `yudi.internationalize(source, filename, [options])`
+* `yudi.internationalize(source, [options])`
     - `source`: jade source
-    - `filename`: jade filename
     - `options`:
+        + `filename`: jade filename
         + `attrs`: list of attribute names
         + `token`: boolean
     - **returns**: internationalized source string, unless `options.tokens` is set to `true`, in which case an object is returned:
         + `source`: internationalized source string
         + `tokens`: list of *tokens* that can be translated
 
-* `yudi.internationalize(source, filename, [options])`
+* `yudi.internationalize(source, [options])`
     - `source`: jade source
-    - `filename`: jade filename
     - `options`:
+        + `filename`: jade filename
         + `attrs`: list of attribute names
     - **returns**: uninternationalized source string
 
