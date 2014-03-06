@@ -31,9 +31,9 @@ traverse = (node, tokens, options) ->
 
   _.compact(_.union(tokens, attrs, childrenTokens, [token]))
 
-module.exports = (source, options = {}) ->
+module.exports = (source, filename, options = {}) ->
   lines = source.split("\n")
-  parser = new Parser(source)
+  parser = new Parser(source, filename, options)
   ast = parser.parse()
   tokens = traverse(ast, [], options)
 
