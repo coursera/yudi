@@ -67,7 +67,7 @@ internationalize = (source, options = {}) ->
   else
     return source
 
-uninternationalize = (source, options) ->
+uninternationalize = (source, options = {}) ->
   lines = source.split("\n")
   tokens = getTranslatableTokens(source, options)
   for token in tokens

@@ -12,6 +12,7 @@ Yudi collects strings from 3 sources:
 * `yudi.internationalize(source, [options])`
     - `source`: jade source
     - `options`:
+        + `filename`: jade filename
         + `attrs`: list of attribute names
         + `token`: boolean
     - **returns**: internationalized source string, unless `options.tokens` is set to `true`, in which case an object is returned:
@@ -21,6 +22,7 @@ Yudi collects strings from 3 sources:
 * `yudi.internationalize(source, [options])`
     - `source`: jade source
     - `options`:
+        + `filename`: jade filename
         + `attrs`: list of attribute names
     - **returns**: uninternationalized source string
 

@@ -14,7 +14,14 @@ extractAttrs = (node, attrs = []) ->
   .map(({name, val}) -> {type: "attr", line: node.line, name, val})
   .value()
 
+isInclude = (node, options) ->
+  if 'filename' of node
+    node.filename isnt options.filename
+  else
+    false
+
 traverse = (node, tokens, options) ->
+  return [] if isInclude(node, options)
   attrs = extractAttrs(node, options.attrs)
 
   children = node.nodes or node.block?.nodes
@@ -33,7 +40,7 @@ traverse = (node, tokens, options) ->
 
 module.exports = (source, options = {}) ->
   lines = source.split("\n")
-  parser = new Parser(source)
+  parser = new Parser(source, options.filename, options)
   ast = parser.parse()
   tokens = traverse(ast, [], options)
 
