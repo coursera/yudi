@@ -73,7 +73,7 @@ describe "(un)internationalize", ->
 
   it "translation keys collected from an internationalized source and from an uninternationalized files should be identical", ->
     wrappedTranslationKeys = []
-    for token in getTranslatableTokens(@i18nResult.source, @options)
+    for token in getTranslatableTokens(@i18nResult.source, filename, @options)
       if token.type isnt "code" and isAlreadyWrapped(token.val)
         matches = wrappedString.exec(token.val)
         wrappedTranslationKeys.push unescapeQuotes(matches[3]) if matches?.length
