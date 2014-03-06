@@ -1,7 +1,7 @@
 fs = require "fs"
 _ = require "lodash"
 {Parser, nodes} = require("jade")
-{Text, Code, Comment} = nodes
+{Text, Code, Comment, BlockComment} = nodes
 
 indexOf = (lines, pattern, start) ->
   for line, i in lines[start..]
@@ -21,7 +21,11 @@ isInclude = (node, options) ->
     false
 
 traverse = (node, tokens, options) ->
-  return [] if isInclude(node, options)
+  if isInclude(node, options) or
+      node instanceof Comment or
+      node instanceof BlockComment
+    return []
+
   attrs = extractAttrs(node, options.attrs)
 
   children = node.nodes or node.block?.nodes
@@ -29,7 +33,7 @@ traverse = (node, tokens, options) ->
     memo.concat(traverse(childNode, memo, options))
   , [])
 
-  if node.val and not (node instanceof Comment)
+  if node.val
     if node instanceof Text
       type = "text"
     else if node instanceof Code

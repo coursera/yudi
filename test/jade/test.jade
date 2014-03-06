@@ -65,6 +65,10 @@ div.btn(
       | interpolations annoying
       a(title=course.get('signatureTrackStatus')['signature_track_duration_left']) #{course.get('signatureTrackStatus')['signature_track_duration_left']} left
 
+    //
+      p test html comment text
+    //-
+      p test jade comment text
 
 - var textMap = {LEARN_FOR_FREE: _t('Learn "for" Free'), VIEW_CLASS_ARCHIVE: _t("View class archive"), GO_TO_CLASS: _t("Go to class"), VIEW_COURSE_RECORD: _t("View course record"), COUNTDOWN: _t(course.getStartCountdown())};
 - var tooltipMap = {CONGRATS_GET_VC: _t("Congratulations! Get your Verified Certificate."), CONGRATS_GET_SOA: _t("Congratulations! Get your Statement of Accomplishment."), DID_NOT_GET_SOA_GET_GRADE: _t("You did not earn a Statement of Accomplishment. Get your grade."), GRADING_IN_PROGRESS: _t("Grading in progress."),  GET_YOUR_GRADE: _t("Get your grade."), COURSE_NO_SOA: _t("This course does not release Statements of Accomplishment.")}
