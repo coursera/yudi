@@ -8,11 +8,15 @@ indexOf = (lines, pattern, start) ->
     return start + i if line.indexOf(pattern) >= 0
   return -1
 
+containsInterpolation = (s) ->
+  _.isString(s) and (s.indexOf(') + "') >= 0 or s.indexOf('" + (') >= 0)
+
 extractAttrs = (node, attrs = []) ->
   _.chain(node.attrs)
-  .filter((attr) -> _.contains(attrs, attr.name))
-  .map(({name, val}) -> {type: "attr", line: node.line, name, val})
-  .value()
+    .filter (attr) ->
+      _.contains(attrs, attr.name) && !containsInterpolation(attr.val)
+    .map ({name, val}) -> {type: "attr", line: node.line, name, val}
+    .value()
 
 isInclude = (node, options) ->
   if 'filename' of node
