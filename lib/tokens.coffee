@@ -1,6 +1,6 @@
 fs = require "fs"
 _ = require "lodash"
-{Parser, nodes} = require("jade")
+{Parser, nodes, runtime} = require("jade")
 {Text, Code, Comment, BlockComment} = nodes
 
 indexOf = (lines, pattern, start) ->
@@ -45,8 +45,13 @@ traverse = (node, tokens, options) ->
 module.exports = (source, options = {}) ->
   lines = source.split("\n")
   parser = new Parser(source, options.filename, options)
-  ast = parser.parse()
-  tokens = traverse(ast, [], options)
+
+  try
+    ast = parser.parse()
+    tokens = traverse(ast, [], options)
+  catch e
+    parser = parser.context()
+    runtime.rethrow(e, parser.filename, parser.lexer.lineno, parser.input)
 
   # correct text attr line numbers since multilined attributes will all
   # correspond to the same line due to the Lexer
