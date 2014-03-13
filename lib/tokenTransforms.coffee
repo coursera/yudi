@@ -48,5 +48,5 @@ module.exports =
       if isWrappedInterpolationOnly(str)
         str.replace("{_t(", "{").replace(")}", "}")
       else
-        str = str.replace(wrappedString, "$3").replace(wrappedAnything, "$2")
+        str = str.replace(wrappedString, "$2$3").replace(wrappedAnything, "$2")
         unescapeQuotes(str)
