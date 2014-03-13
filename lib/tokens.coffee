@@ -25,16 +25,13 @@ isInclude = (node, options) ->
     false
 
 traverse = (node, tokens, options) ->
-  if isInclude(node, options) or
-      node instanceof Comment or
-      node instanceof BlockComment
-    return []
+  return [] if node instanceof Comment or node instanceof BlockComment
 
   attrs = extractAttrs(node, options.attrs)
 
   children = node.nodes or node.block?.nodes
   childrenTokens = _.reduce(children, (memo, childNode) ->
-    memo.concat(traverse(childNode, memo, options))
+    memo.concat(traverse(_.extend(childNode, {filename: node.filename}), memo, options))
   , [])
 
   if node.val
@@ -42,7 +39,7 @@ traverse = (node, tokens, options) ->
       type = "text"
     else if node instanceof Code
       type = "code"
-    token = {val: node.val, line:node.line, type: type} if type
+    token = {val: node.val, line:node.line, filename: node.filename, type} if type
 
   _.compact(_.union(tokens, attrs, childrenTokens, [token]))
 
@@ -62,7 +59,8 @@ module.exports = (source, options = {}) ->
   for node in tokens
     # jade linenumbers are 1 based
     node.line -= 1
-    if node.type is "attr"
+    # only correct line numbers for attrs in this file
+    if node.type is "attr" and node.filename = options.filename
       line = lines[node.line]
       if line.indexOf(node.name) < 0
         node.line = indexOf(lines, node.name, node.line)
