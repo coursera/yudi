@@ -13,8 +13,7 @@
   },
   "devDependencies": {
     "chai": "~1.9.0",
-    "mocha": "~1.17.1",
-    "requirejs": "~2.1.11"
+    "mocha": "~1.17.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/_mocha --compilers coffee:coffee-script/register --reporter spec test/*"
