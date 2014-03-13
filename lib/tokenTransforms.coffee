@@ -26,7 +26,7 @@ stringifyInterpolations = (str) ->
 module.exports =
   attr:
     internationalize: (str) -> if isStringLiteral(str) then "_t(#{str})" else str
-    uninternationalize: (str) -> str.replace(wrappedAnything, "$2")
+    uninternationalize: (str) -> str.replace(wrappedAnything, "$1")
 
   text:
     internationalize: (str) ->
@@ -48,5 +48,5 @@ module.exports =
       if isWrappedInterpolationOnly(str)
         str.replace("{_t(", "{").replace(")}", "}")
       else
-        str = str.replace(wrappedString, "$2$3").replace(wrappedAnything, "$2")
+        str = str.replace(wrappedString, "$2$3").replace(wrappedAnything, "$1")
         unescapeQuotes(str)

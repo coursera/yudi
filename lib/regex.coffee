@@ -16,11 +16,11 @@ module.exports = {
     \)
   ///g
   wrappedAnything: ///
-    ([\#!]\{)? # only present for wrapped text tokens (optional, group 1)
+    (?:[\#!]\{)? # only present for wrapped text tokens
       _t\(
-        (.+) # translation key (group 2)
+        (.+) # translation key (group 1)
       \)
-    (\})? # only present for wrapped text tokens (optional, group 3)
+    (?:\})? # only present for wrapped text tokens
   ///g
 
   wrappedString: ///
