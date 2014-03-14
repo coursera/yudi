@@ -1,0 +1,11 @@
+[
+  "#{strings} with multiple #{interpolations}",
+  "&nbsp; look! there's a trailing space",
+  "&nbsp; look! there's a trailing space&nbsp;",
+  "&nbsp; look! there's more space",
+  "&nbsp; look! there's more space&nbsp;&nbsp;",
+  "simple string detection",
+  "strings with #{complicated + javascript.code(\"with quoted strings\")}",
+  "strings with #{interpolations}",
+  "strings with #{javascript.code()}"
+]

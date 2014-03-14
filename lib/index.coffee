@@ -25,7 +25,9 @@ internationalize = (source, options = {}) ->
     # using trimmed to do wrapping and then replacements in order to preserve
     # whitespace so the string transformation doesn't have to deal with it
     trimmed = token.val.trim()
-    currentLine = lines[token.line]
+    # only perform replace for tokens in the given file and not in includes
+    replace = token.filename is options.filename
+    line = lines[token.line]
 
     if token.type is "code"
       # collect any _t wrapped raw strings in escaped js code
@@ -38,7 +40,7 @@ internationalize = (source, options = {}) ->
         internationalized.push {
           line: token.line
           type: token.type
-          val: unescapeQuotes(matches[3])
+          val: unescapeQuotes(matches[2])
         }
     else
       record = false
@@ -46,13 +48,13 @@ internationalize = (source, options = {}) ->
       if token.type is "text"
         record = !isInterpolationOnly(trimmed) and !ignoreText(trimmed)
         wrapped = tokenTransforms.text.internationalize(trimmed)
-        lines[token.line] = replaceLastOccurrence(currentLine, trimmed, wrapped)
+        lines[token.line] = replaceLastOccurrence(line, trimmed, wrapped) if replace
 
       if token.type is "attr"
         record = isStringLiteral(trimmed)
         wrapped = tokenTransforms.attr.internationalize(trimmed)
         # assuming there are no spaces between the attr name and the value
-        lines[token.line] = currentLine.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}")
+        lines[token.line] = line.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}") if replace
 
       if record
         internationalized.push {
@@ -72,13 +74,15 @@ uninternationalize = (source, options = {}) ->
   tokens = getTranslatableTokens(source, options)
   for token in tokens
     trimmed = token.val.trim()
+    # only perform replace for tokens in the given file and not in includes
+    replace = token.filename is options.filename
     line = lines[token.line]
     if token.type is "text"
       unwrapped = tokenTransforms.text.uninternationalize(trimmed)
-      lines[token.line] = replaceLastOccurrence(line, trimmed, unwrapped)
+      lines[token.line] = replaceLastOccurrence(line, trimmed, unwrapped) if replace
     if token.type is "attr"
       unwrapped = tokenTransforms.attr.uninternationalize(trimmed)
-      lines[token.line] = line.replace(trimmed, unwrapped)
+      lines[token.line] = line.replace(trimmed, unwrapped) if replace
 
   return lines.join("\n")
 

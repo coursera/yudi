@@ -16,24 +16,23 @@ module.exports = {
     \)
   ///g
   wrappedAnything: ///
-    ([\#!]\{)? # only present for wrapped text tokens (optional, group 1)
+    (?:[\#!]\{)? # only present for wrapped text tokens
       _t\(
-        (.+) # translation key (group 2)
+        (.+) # translation key (group 1)
       \)
-    (\})? # only present for wrapped text tokens (optional, group 3)
+    (?:\})? # only present for wrapped text tokens
   ///g
 
   wrappedString: ///
-    # ^\s*
-    ([\#!]\{)? # only present for wrapped text tokens (optional, group 1)
+    (?:[\#!]\{)? # only present for wrapped text tokens
       _t\(
-        (["'])
-          (.+) # key string (group 3)
-        \2
-        (,\s\{.+\})? # interpolation hash (optional, group 4)
+        (["']) # quote (group 1)
+          (.+) # key string (group 2)
+        \1
+        (?:,\s\{.+\})? # interpolation hash
       \)
-    (\})? # only present for wrapped text tokens
-    (\s|&nbsp;)*$ # trailing space
+    (?:\})? # only present for wrapped text tokens
+    ((?:\s|&nbsp;)*)$ # trailing space (group 3)
   ///
   ignoreText: testRegex ///
     ^

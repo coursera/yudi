@@ -36,7 +36,7 @@ describe "Regular Expressions", ->
       '#{_t(a.c("aoeu"))}': ['a.c("aoeu")']
       '_t("aeo\')': ['"aeo\'']
       '!{_t("aeo")}': ['"aeo"']
-    checkMatches(map, regex.wrappedAnything, 2)
+    checkMatches(map, regex.wrappedAnything, 1)
 
   checkTrue = (f, strs) ->
     for str in strs
