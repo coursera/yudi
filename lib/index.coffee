@@ -48,15 +48,13 @@ internationalize = (source, options = {}) ->
       if token.type is "text"
         record = !isInterpolationOnly(trimmed) and !ignoreText(trimmed)
         wrapped = tokenTransforms.text.internationalize(trimmed)
-        if replace
-          lines[token.line] = replaceLastOccurrence(line, trimmed, wrapped)
+        lines[token.line] = replaceLastOccurrence(line, trimmed, wrapped) if replace
 
       if token.type is "attr"
         record = isStringLiteral(trimmed)
         wrapped = tokenTransforms.attr.internationalize(trimmed)
         # assuming there are no spaces between the attr name and the value
-        if replace
-          lines[token.line] = line.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}")
+        lines[token.line] = line.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}") if replace
 
       if record
         internationalized.push {
