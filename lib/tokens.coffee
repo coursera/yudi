@@ -20,12 +20,6 @@ extractAttrs = (node, attrs = []) ->
       _.extend(attr, {type: "attr", name, val})
     .value()
 
-isInclude = (node, options) ->
-  if 'filename' of node
-    node.filename isnt options.filename
-  else
-    false
-
 traverse = (node, tokens, options) ->
   return [] if node instanceof Comment or node instanceof BlockComment
 
