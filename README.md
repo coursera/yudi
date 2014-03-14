@@ -31,6 +31,7 @@ Yudi collects strings from 3 sources:
     - `text`: text elements
     - `attr`: attributes
     - `code`: string literals wrapped in `_t` in escaped js code
+    - `filename`: filename of where this token is extracted. Can be used to check against `options.filename` to see if a token is extracted from the current file or from any `include` or `extend`
 * `val`: string marked for translation
 * `line`: 0 based line number in the jade source
 
