@@ -15,7 +15,9 @@ extractAttrs = (node, attrs = []) ->
   _.chain(node.attrs)
     .filter (attr) ->
       _.contains(attrs, attr.name) && !containsInterpolation(attr.val)
-    .map ({name, val}) -> {type: "attr", line: node.line, name, val}
+    .map ({name, val}) ->
+      attr = _.pick(node, "line", "filename")
+      _.extend(attr, {type: "attr", name, val})
     .value()
 
 isInclude = (node, options) ->
@@ -31,7 +33,8 @@ traverse = (node, tokens, options) ->
 
   children = node.nodes or node.block?.nodes
   childrenTokens = _.reduce(children, (memo, childNode) ->
-    memo.concat(traverse(_.extend(childNode, {filename: node.filename}), memo, options))
+    childNode = _.defaults(childNode, {filename: node.filename})
+    memo.concat(traverse(childNode, memo, options))
   , [])
 
   if node.val
@@ -60,7 +63,7 @@ module.exports = (source, options = {}) ->
     # jade linenumbers are 1 based
     node.line -= 1
     # only correct line numbers for attrs in this file
-    if node.type is "attr" and node.filename = options.filename
+    if node.type is "attr" and node.filename is options.filename
       line = lines[node.line]
       if line.indexOf(node.name) < 0
         node.line = indexOf(lines, node.name, node.line)
