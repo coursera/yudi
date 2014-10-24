@@ -19,5 +19,9 @@
     "test": "./node_modules/.bin/_mocha --compilers coffee:coffee-script/register --reporter spec test/*"
   },
   "author": "@yangsu",
-  "license": "BSD"
+  "license": "BSD",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webedx-spark/yudi.git"
+  }
 }
