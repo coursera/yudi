@@ -22,6 +22,6 @@
   "license": "BSD",
   "repository": {
     "type": "git",
-    "url": "https://github.com/webedx-spark/yudi.git"
+    "url": "https://github.com/coursera/yudi.git"
   }
 }
