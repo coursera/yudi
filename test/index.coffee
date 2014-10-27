@@ -80,7 +80,9 @@ describe "cases", ->
             expect(attrsTokens).to.not.be.empty
 
         it "correct for line number shifts due to multiline tag + attrs declarations", ->
-          for token in tokens when token.filename is filename
+          # ignore if because the expression following if gets transformed by jade
+          ignore = (token) -> token.type is "code" and token.val.contains("if")
+          for token in tokens when token.filename is filename and not ignore(token)
             str = if token.type is "attr" then token.name else token.val
             expect(lines[token.line]).to.contain str
 

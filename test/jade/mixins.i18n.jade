@@ -1,0 +1,18 @@
+mixin university-link(university, classes)
+  a.university-link(href=university.getLink(), class=classes)
+    if block
+      block
+
+//- some comment
+mixin c-time-commitment(momentObj, classes)
+  - var seconds = momentObj.seconds();
+  - var minutes = momentObj.minutes() + Math.round(seconds/60);
+  - var hours = momentObj.hours();
+  span(class=classes)
+    if hours
+      - minutes = ('0' + minutes.toString()).slice(-2);
+      | #{_t("#{hours}h #{minutes}m", {"hours":hours, "minutes":minutes})}
+    else if minutes
+      | #{_t("#{minutes} min", {"minutes":minutes})}
+    else if seconds !== 0
+      | #{_t("#{seconds} sec", {"seconds":seconds})}
