@@ -1,9 +1,0 @@
-[
-  "#{course.get('signatureTrackStatus')['signature_track_duration_left']} left",
-  "annoying",
-  "interpolations annoying",
-  "pipes",
-  "really",
-  "testing",
-  "with #{annoying}"
-]
