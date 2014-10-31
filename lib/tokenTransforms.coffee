@@ -28,6 +28,10 @@ module.exports =
     internationalize: (str) -> if isStringLiteral(str) then "_t(#{str})" else str
     uninternationalize: (str) -> str.replace(wrappedAnything, "$1")
 
+  code:
+    internationalize: (str) -> if str then "_t(#{str})" else str
+    uninternationalize: (str) -> str.replace(wrappedAnything, "$1")
+
   text:
     internationalize: (str) ->
       return str if ignoreText(str)
