@@ -1,10 +1,10 @@
-_ = require("lodash")
-fs = require("fs")
-{expect} = require("chai")
+_ = require 'lodash'
+fs = require 'fs'
+{expect} = require 'chai'
 
-tokenTransforms = require("../lib/tokenTransforms")
+tokenTransforms = require '../lib/tokenTransforms'
 
-describe "tokenTransforms", ->
+describe 'tokenTransforms', ->
   test = (type, testMap) ->
     describe type, ->
       it "should internationalize #{type} properly", ->
@@ -15,11 +15,11 @@ describe "tokenTransforms", ->
         for attribute, internationalized of testMap
           expect(tokenTransforms[type].uninternationalize(internationalized)).to.equal attribute
 
-      it "uninternationalize(internationalize(str)) should equal str", ->
+      it 'uninternationalize(internationalize(str)) should equal str', ->
         for str in _.keys(testMap)
           expect(tokenTransforms[type].uninternationalize(tokenTransforms[type].internationalize(str))).to.equal str
 
-  test "attr", {
+  test 'attr', {
     '': ''
     '""': '""'
     '"aoeu"': '_t("aoeu")'
@@ -29,7 +29,7 @@ describe "tokenTransforms", ->
     'something ? slightly.more("") : complicated': 'something ? slightly.more("") : complicated'
   }
 
-  test "text", {
+  test 'text', {
     '': ''
     '""': '""'
     'aoeu': '#{_t("aoeu")}'
@@ -46,7 +46,7 @@ describe "tokenTransforms", ->
     'str with <html>': '!{_t("str with <html>")}'
   }
 
-  test "code", {
+  test 'code', {
     '': ''
     '""': '_t("")'
     'aoeu': '_t(aoeu)'

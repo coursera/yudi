@@ -1,13 +1,13 @@
 function template(locals) {
-var jade_debug = [{ lineno: 1, filename: "layout.jade" }];
+var jade_debug = [{ lineno: 1, filename: "test/jade/layout.jade" }];
 try {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
 ;var locals_for_with = (locals || {});(function (_t) {
 var jade_indent = [];
-jade_debug.unshift({ lineno: 0, filename: "layout.jade" });
-jade_debug.unshift({ lineno: 1, filename: "layout.jade" });
+jade_debug.unshift({ lineno: 0, filename: "test/jade/layout.jade" });
+jade_debug.unshift({ lineno: 1, filename: "test/jade/layout.jade" });
 buf.push("\n<h1>");
 jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
 jade_debug.unshift({ lineno: 1, filename: jade_debug[0].filename });
@@ -16,7 +16,7 @@ jade_debug.shift();
 jade_debug.shift();
 buf.push("</h1>");
 jade_debug.shift();
-jade_debug.unshift({ lineno: 3, filename: "layout.jade" });
+jade_debug.unshift({ lineno: 3, filename: "test/jade/layout.jade" });
 jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
 buf.push("");
 jade_debug.shift();

@@ -1,7 +1,7 @@
 {
   escapeQuotes
   unescapeQuotes
-} = require("./util")
+} = require './util'
 {
   interpolation
   wrappedString
@@ -12,10 +12,10 @@
   isInterpolationOnly
   isWrappedInterpolationOnly
   ignoreText
-} = require("./regex")
+} = require './regex'
 
 selectEscapeSymbol = (s) ->
-  if s.indexOf("!{") >= 0 or containsHtml(s) or containsHtmlEntity(s) then "!" else "#"
+  if s.indexOf('!{') >= 0 or containsHtml(s) or containsHtmlEntity(s) then '!' else '#'
 
 stringifyInterpolations = (str) ->
   interpolations = []
@@ -26,11 +26,11 @@ stringifyInterpolations = (str) ->
 module.exports =
   attr:
     internationalize: (str) -> if isStringLiteral(str) then "_t(#{str})" else str
-    uninternationalize: (str) -> str.replace(wrappedAnything, "$1")
+    uninternationalize: (str) -> str.replace(wrappedAnything, '$1')
 
   code:
     internationalize: (str) -> if str then "_t(#{str})" else str
-    uninternationalize: (str) -> str.replace(wrappedAnything, "$1")
+    uninternationalize: (str) -> str.replace(wrappedAnything, '$1')
 
   text:
     internationalize: (str) ->
@@ -40,7 +40,7 @@ module.exports =
       esc = selectEscapeSymbol(str)
 
       if isInterpolationOnly(str)
-        str.replace(/[!#]{/, "#{esc}{_t(").replace("}", ")}")
+        str.replace(/[!#]{/, "#{esc}{_t(").replace('}', ')}')
       else
         interpolations = stringifyInterpolations(str)
         if interpolations?.length
@@ -50,7 +50,7 @@ module.exports =
 
     uninternationalize: (str) ->
       if isWrappedInterpolationOnly(str)
-        str.replace("{_t(", "{").replace(")}", "}")
+        str.replace('{_t(', '{').replace(')}', '}')
       else
-        str = str.replace(wrappedString, "$2$3").replace(wrappedAnything, "$1")
+        str = str.replace(wrappedString, '$2$3').replace(wrappedAnything, '$1')
         unescapeQuotes(str)

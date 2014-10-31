@@ -1,6 +1,6 @@
-_ = require("lodash")
-tokenTransforms = require("./tokenTransforms")
-getTranslatableTokens = require("./tokens")
+_ = require 'lodash'
+{Compiler} = require 'jade'
+tokenTransforms = require './tokenTransforms'
 {
   isAlreadyWrapped
   isInterpolationOnly
@@ -8,82 +8,62 @@ getTranslatableTokens = require("./tokens")
   wrappedStringInCode
   ignoreText
   isStringLiteral
-} = require("./regex")
+} = require './regex'
 {
-  replaceLastOccurrence
   unescapeQuotes
   extractAllMatches
   stripQuotes
-} = require("./util")
+} = require './util'
 
-internationalize = (source, options = {}) ->
-  lines = source.split("\n")
-  tokens = getTranslatableTokens(source, options)
-  internationalized = []
+class Yudi extends Compiler
+  constructor: (node, options) ->
+    Compiler.call(this, arguments...)
+    @strings = []
+    @attrsWhitelist = options.attrs ? []
+    @postCompile = options.postCompile
 
-  for token in tokens
-    # using trimmed to do wrapping and then replacements in order to preserve
-    # whitespace so the string transformation doesn't have to deal with it
-    trimmed = token.val.trim()
-    # only perform replace for tokens in the given file and not in includes
-    replace = token.filename is options.filename
-    line = lines[token.line]
+  compile: ->
+    result = super()
+    @postCompile?(this)
+    result
 
-    if token.type is "code"
-      # collect any _t wrapped raw strings in escaped js code
-      matches = extractAllMatches(token.val, wrappedStringInCode, 2)
-      _.each matches, (match) ->
-        internationalized.push {line: token.line, type: token.type, val: match }
-    else if isAlreadyWrapped(trimmed)
-      matches = wrappedString.exec(trimmed)
+  checkAlreadyWrapped: (str) ->
+    wrapped = isAlreadyWrapped(str)
+    if wrapped
+      matches = wrappedString.exec(str)
       if matches?.length
-        internationalized.push {
-          line: token.line
-          type: token.type
-          val: unescapeQuotes(matches[2])
-        }
-    else
-      record = false
+        @strings.push(unescapeQuotes(match[2]))
+    wrapped
 
-      if token.type is "text"
-        record = !isInterpolationOnly(trimmed) and !ignoreText(trimmed)
-        wrapped = tokenTransforms.text.internationalize(trimmed)
-        lines[token.line] = replaceLastOccurrence(line, trimmed, wrapped) if replace
+  visitAttributes: (attrs, attributeBlocks) ->
+    _.chain attrs
+      .filter (attr) => attr.name in @attrsWhitelist
+      .each (attr) =>
+        trimmed = attr.val.trim()
+        if not @checkAlreadyWrapped(trimmed)
+          if attr.escaped
+            @strings.push(stripQuotes(trimmed))
+          wrapped = tokenTransforms.attr.internationalize(trimmed)
+          attr.val = wrapped
 
-      if token.type is "attr"
-        record = isStringLiteral(trimmed)
-        wrapped = tokenTransforms.attr.internationalize(trimmed)
-        # assuming there are no spaces between the attr name and the value
-        lines[token.line] = line.replace("#{token.name}=#{trimmed}", "#{token.name}=#{wrapped}") if replace
+    super attrs, attributeBlocks
 
-      if record
-        internationalized.push {
-          line: token.line
-          type: token.type
-          val: stripQuotes(trimmed)
-        }
+  visitCode: (code) ->
+    matches = extractAllMatches(code.val, wrappedStringInCode, 2)
+    _.each matches, (match) =>
+      @strings.push match
+    if code.buffer
+      code.val = tokenTransforms.code.internationalize(code.val)
+    super code
 
-  source = lines.join("\n")
-  if options.tokens?
-    return {tokens: internationalized, source}
-  else
-    return source
+  visitText: (text) ->
+    trimmed = text.val.trim()
+    if not @checkAlreadyWrapped(trimmed)
+      if !isInterpolationOnly(trimmed) and !ignoreText(trimmed)
+        @strings.push(trimmed)
+      wrapped = tokenTransforms.text.internationalize(trimmed)
+      text.val = text.val.replace(trimmed, wrapped)
 
-uninternationalize = (source, options = {}) ->
-  lines = source.split("\n")
-  tokens = getTranslatableTokens(source, options)
-  for token in tokens
-    trimmed = token.val.trim()
-    # only perform replace for tokens in the given file and not in includes
-    replace = token.filename is options.filename
-    line = lines[token.line]
-    if token.type is "text"
-      unwrapped = tokenTransforms.text.uninternationalize(trimmed)
-      lines[token.line] = replaceLastOccurrence(line, trimmed, unwrapped) if replace
-    if token.type is "attr"
-      unwrapped = tokenTransforms.attr.uninternationalize(trimmed)
-      lines[token.line] = line.replace(trimmed, unwrapped) if replace
+    super text
 
-  return lines.join("\n")
-
-module.exports = {internationalize, uninternationalize}
+module.exports = Yudi

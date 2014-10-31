@@ -1,13 +1,13 @@
 function template(locals) {
-var jade_debug = [{ lineno: 1, filename: "mixins.jade" }];
+var jade_debug = [{ lineno: 1, filename: "test/jade/mixins.jade" }];
 try {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
 var jade_indent = [];
-jade_debug.unshift({ lineno: 0, filename: "mixins.jade" });
-jade_debug.unshift({ lineno: 1, filename: "mixins.jade" });
+jade_debug.unshift({ lineno: 0, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 1, filename: "test/jade/mixins.jade" });
 
 
 
@@ -32,9 +32,9 @@ jade_debug.unshift({ lineno: 1, filename: "mixins.jade" });
 
 
 jade_debug.shift();
-jade_debug.unshift({ lineno: 6, filename: "mixins.jade" });
+jade_debug.unshift({ lineno: 6, filename: "test/jade/mixins.jade" });
 jade_debug.shift();
-jade_debug.unshift({ lineno: 7, filename: "mixins.jade" });
+jade_debug.unshift({ lineno: 7, filename: "test/jade/mixins.jade" });
 
 
 
