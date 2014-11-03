@@ -1,6 +1,6 @@
 # Yudi
 
-Yudi is a custome jade compiler we use here at Coursera to internationalize our jade templates. This compiler transforms jade source by collecting all strings that can be translated and wrapping them with `_t("...")` so translations can be injected through the `_t` function.
+Yudi is a custom jade compiler we use here at Coursera to internationalize our jade templates. This compiler transforms jade source by collecting all strings that can be translated and wrapping them with `_t("...")` so translations can be injected through the `_t` function.
 
 Yudi collects strings from 3 sources:
 

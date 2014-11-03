@@ -59,7 +59,7 @@ class Yudi extends Compiler
   visitText: (text) ->
     trimmed = text.val.trim()
     if not @checkAlreadyWrapped(trimmed)
-      if !isInterpolationOnly(trimmed) and !ignoreText(trimmed)
+      if not isInterpolationOnly(trimmed) and not ignoreText(trimmed)
         @strings.push(trimmed)
       wrapped = tokenTransforms.text.internationalize(trimmed)
       text.val = text.val.replace(trimmed, wrapped)
