@@ -1,6 +1,6 @@
 # Yudi
 
-Yudi is a module we use here at Coursera to internationalize our jade templates. This module takes in jade source and transforms it by collecting all strings that can be translated and wrapping them with `_t("...")` so translations can be injected through the `_t` function.
+Yudi is a custom jade compiler we use here at Coursera to internationalize our jade templates. This compiler transforms jade source by collecting all strings that can be translated and wrapping them with `_t("...")` so translations can be injected through the `_t` function.
 
 Yudi collects strings from 3 sources:
 
@@ -9,31 +9,20 @@ Yudi collects strings from 3 sources:
 * any *string literal* wrapped with `_t("...")` in any escaped JavaScript code within the jade source
 
 ## Usage
-* `yudi.internationalize(source, [options])`
-    - `source`: jade source
-    - `options`:
-        + `filename`: jade filename
-        + `attrs`: list of attribute names
-        + `token`: boolean
-    - **returns**: internationalized source string, unless `options.tokens` is set to `true`, in which case an object is returned:
-        + `source`: internationalized source string
-        + `tokens`: list of *tokens* that can be translated
+```js
+var Yudi = require('yudi');
 
-* `yudi.internationalize(source, [options])`
-    - `source`: jade source
-    - `options`:
-        + `filename`: jade filename
-        + `attrs`: list of attribute names
-    - **returns**: uninternationalized source string
+var content = 'jade source string....';
+var js = jade.compileClient(content, {
+  filename: filename,
+  compiler: Yudi,
+  attrs: [...],
+  postCompile: function(compiler) { ... }
+});
+```
 
-### Token
-* `type`: any of values the below
-    - `text`: text elements
-    - `attr`: attributes
-    - `code`: string literals wrapped in `_t` in escaped js code
-    - `filename`: filename of where this token is extracted. Can be used to check against `options.filename` to see if a token is extracted from the current file or from any `include` or `extend`
-* `val`: string marked for translation
-* `line`: 0 based line number in the jade source
+*  `attrs` is list of attribute names of html attributes in your jade source you want Yudi to wrap with `_t`
+*  `postCompile` is a function you can use to execute code after compilation is complete. The compiler instance will be passed into the callback. You can access the list of strings the compiler has collected in `compiler.strings`. You can also directly access other information about the compiler instance, such as its mixins.
 
 ### `_t` function signature
 `_t(translationKey, [interpolationHash])`
@@ -49,6 +38,12 @@ Run tests with the following command:
 ```bash
 npm test
 ```
+
+### Adding a new jade test
+
+1. Create a test jade file at `test/jade/<test>.jade`
+2. From the root directory, run ` ./scripts/generateTestFiles.coffee <test>.jade`
+3. You should see a `<test>.js` and `<test>.json`. `<test>.js` contains the compiled js template source with `_t` injected. `<test>.json` contains a list of strings Yudi found in the jade source
 
 ## Naming
 Yudi, 玉帝, or the Jade Emperor in Chinese

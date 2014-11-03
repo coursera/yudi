@@ -1,16 +1,16 @@
-_ = require("lodash")
-{expect} = require("chai")
+_ = require 'lodash'
+{expect} = require 'chai'
 
-regex = require("../lib/regex")
-{extractAllMatches} = require("../lib/util")
+regex = require '../lib/regex'
+{extractAllMatches} = require '../lib/util'
 
-describe "Regular Expressions", ->
+describe 'Regular Expressions', ->
   checkMatches = (map, regex, group) ->
     for str, interpolations of map
       matches = extractAllMatches(str, regex, group)
       expect(matches).to.deep.equal interpolations
 
-  it "interpolation", ->
+  it 'interpolation', ->
     map =
       "": []
       '#{a}': ["a"]
@@ -18,7 +18,7 @@ describe "Regular Expressions", ->
       '#{a.b()} and #{c + d*e("fff")}': ["a.b()", 'c + d*e("fff")']
     checkMatches(map, regex.interpolation, 1)
 
-  it "wrappedStringInCode", ->
+  it 'wrappedStringInCode', ->
     map =
       "": []
       '_t(a)': []
@@ -26,10 +26,12 @@ describe "Regular Expressions", ->
       '_t("aeo\')': []
       '_t("aeo")': ["aeo"]
       '_t("aeo") and _t(\'aeo\')': ["aeo", "aeo"]
-      "var a = {k1: _t(\"t1\"), k2: _t(\'t2\'), k3: _t(\"t3\"), k4: _t(\'t4\'), k5: _t(\"t5\")": ["t1", "t2", "t3", "t4", "t5"]
+      "var a = {k1: _t(\"t1\"), k2: _t(\'t2\'), k3: _t(\"t3\"), k4: _t(\'t4\'), k5: _t(\"t5\")": [
+        "t1", "t2", "t3", "t4", "t5"
+      ]
     checkMatches(map, regex.wrappedStringInCode, 2)
 
-  it "wrappedAnything", ->
+  it 'wrappedAnything', ->
     map =
       "": []
       '_t(a)': ["a"]
@@ -42,7 +44,7 @@ describe "Regular Expressions", ->
     for str in strs
       expect(f(str)).to.be.true
 
-  it "wrappedString", ->
+  it 'wrappedString', ->
     strs = [
       '_t("aaoeu")'
       '#{_t("aaoeu")}'
@@ -55,7 +57,7 @@ describe "Regular Expressions", ->
     ]
     checkTrue(((s) -> regex.wrappedString.test(s)), strs)
 
-  it "ignoreText", ->
+  it 'ignoreText', ->
     strs = [
       ""
       "  "
@@ -69,7 +71,7 @@ describe "Regular Expressions", ->
     ]
     checkTrue(regex.ignoreText, strs)
 
-  it "isStringLiteral", ->
+  it 'isStringLiteral', ->
     strs = [
       '"s"'
       "'a etu at'"
@@ -78,7 +80,7 @@ describe "Regular Expressions", ->
     ]
     checkTrue(regex.isStringLiteral, strs)
 
-  it "isAlreadyWrapped", ->
+  it 'isAlreadyWrapped', ->
     strs = [
       '_t("s")'
       '_t("s") + _t("s")'
@@ -86,7 +88,7 @@ describe "Regular Expressions", ->
     ]
     checkTrue(regex.isAlreadyWrapped, strs)
 
-  it "containsHtml", ->
+  it 'containsHtml', ->
     strs = [
       '<html>'
       '<a href="">a</a>'
@@ -94,14 +96,14 @@ describe "Regular Expressions", ->
     ]
     checkTrue(regex.containsHtml, strs)
 
-  it "containsHtmlEntity", ->
+  it 'containsHtmlEntity', ->
     strs = [
       '&nbsp;'
       '&nbsp; aoeu &quot;'
     ]
     checkTrue(regex.containsHtmlEntity, strs)
 
-  it "isInterpolationOnly", ->
+  it 'isInterpolationOnly', ->
     strs = [
       '#{var}'
       '#{(function() {})(1)}'
@@ -113,7 +115,7 @@ describe "Regular Expressions", ->
     ]
     checkTrue(regex.isInterpolationOnly, strs)
 
-  it "isWrappedInterpolationOnly", ->
+  it 'isWrappedInterpolationOnly', ->
     strs = [
       '#{_t(var)}'
       '#{_t(function() {})}'
