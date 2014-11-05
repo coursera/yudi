@@ -32,7 +32,7 @@ class Yudi extends Compiler
     if wrapped
       matches = wrappedString.exec(str)
       if matches?.length
-        @strings.push(unescapeQuotes(match[2]))
+        @strings.push(unescapeQuotes(matches[2]))
     wrapped
 
   visitAttributes: (attrs, attributeBlocks) ->
