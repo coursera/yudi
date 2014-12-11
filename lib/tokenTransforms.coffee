@@ -23,7 +23,7 @@ stringifyInterpolations = (str) ->
   while match
     interpolations.push(match[1])
     match = interpolation.exec(str)
-  keys = ("\"#{escapeQuotes(interp)}\":#{interp}" for interp in interpolations)
+  keys = ("\"#{escapeQuotes(interp)}\":_t(#{interp})" for interp in interpolations)
   if keys.length then "{#{keys.join(", ")}}" else ""
 
 module.exports =

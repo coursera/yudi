@@ -41,8 +41,8 @@ describe 'tokenTransforms', ->
     '!!': '!!'
     '&nbsp;': '&nbsp;'
     '123': '123'
-    'str with #{interpolation}': '#{_t("str with #{interpolation}", {"interpolation":interpolation})}'
-    'str with #{interpolation.get("a")}': '#{_t("str with #{interpolation.get(\\"a\\")}", {"interpolation.get(\\"a\\")":interpolation.get("a")})}'
+    'str with #{interpolation}': '#{_t("str with #{interpolation}", {"interpolation":_t(interpolation)})}'
+    'str with #{interpolation.get("a")}': '#{_t("str with #{interpolation.get(\\"a\\")}", {"interpolation.get(\\"a\\")":_t(interpolation.get("a"))})}'
     'str with <html>': '!{_t("str with <html>")}'
   }
 
