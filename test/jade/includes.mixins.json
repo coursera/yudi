@@ -49,5 +49,7 @@
   "&nbsp; look! there's more space&nbsp;&nbsp;",
   "#{hours}h #{minutes}m",
   "#{minutes} min",
-  "#{seconds} sec"
+  "#{seconds} sec",
+  "some string",
+  "some string with block"
 ]

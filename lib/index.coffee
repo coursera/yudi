@@ -50,11 +50,19 @@ class Yudi extends Compiler
 
   visitCode: (code) ->
     matches = extractAllMatches(code.val, wrappedStringInCode, 2)
-    _.each matches, (match) =>
-      @strings.push match
+    if matches?.length
+      @strings = @strings.concat(matches)
     if code.buffer
       code.val = tokenTransforms.code.internationalize(code.val)
     super code
+
+  visitMixin: (mixin) ->
+    if mixin.args? and mixin.call
+      matches = extractAllMatches(mixin.args, wrappedStringInCode, 2)
+      if matches?.length
+        @strings = @strings.concat(matches)
+
+    super mixin
 
   visitText: (text) ->
     trimmed = text.val.trim()

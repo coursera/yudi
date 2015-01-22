@@ -4,7 +4,7 @@ try {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-;var locals_for_with = (locals || {});(function (_t, annoying, complicated, course, interpolations, javascript, link, onlyVar, strings) {
+;var locals_for_with = (locals || {});(function (Math, _t, annoying, complicated, course, interpolations, javascript, link, onlyVar, strings) {
 var jade_indent = [];
 jade_debug.unshift({ lineno: 0, filename: "test/jade/includes.mixins.jade" });
 jade_debug.unshift({ lineno: 1, filename: "test/jade/header.jade" });
@@ -299,85 +299,117 @@ jade_debug.shift();
 jade_debug.shift();
 jade_debug.unshift({ lineno: 7, filename: "test/jade/mixins.jade" });
 jade_debug.unshift({ lineno: 1, filename: "test/jade/mixins.jade" });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+jade_mixins["university-link"] = function(university, classes){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+jade_debug.unshift({ lineno: 2, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 2, filename: "test/jade/mixins.jade" });
+buf.push("<a" + (jade.attr("href", university.getLink(), true, false)) + (jade.cls(['university-link',classes], [null,true])) + ">");
+jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
+jade_debug.unshift({ lineno: 3, filename: "test/jade/mixins.jade" });
+if ( block)
+{
+jade_debug.unshift({ lineno: 4, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: undefined, filename: "test/jade/mixins.jade" });
+jade_indent.push('  ');
+block && block();
+jade_indent.pop();
+jade_debug.shift();
+jade_debug.shift();
+}
+jade_debug.shift();
+jade_debug.shift();
+buf.push("</a>");
+jade_debug.shift();
+jade_debug.shift();
+};
 jade_debug.shift();
 jade_debug.unshift({ lineno: 6, filename: "test/jade/mixins.jade" });
 jade_debug.shift();
 jade_debug.unshift({ lineno: 7, filename: "test/jade/mixins.jade" });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+jade_mixins["c-time-commitment"] = function(momentObj, classes, endString){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+jade_debug.unshift({ lineno: 8, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 8, filename: "test/jade/mixins.jade" });
+var seconds = momentObj.seconds();
+jade_debug.shift();
+jade_debug.unshift({ lineno: 9, filename: "test/jade/mixins.jade" });
+var minutes = momentObj.minutes() + Math.round(seconds/60);
+jade_debug.shift();
+jade_debug.unshift({ lineno: 10, filename: "test/jade/mixins.jade" });
+var hours = momentObj.hours();
+jade_debug.shift();
+jade_debug.unshift({ lineno: 11, filename: "test/jade/mixins.jade" });
+buf.push("<span" + (jade.cls([classes], [true])) + ">");
+jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
+jade_debug.unshift({ lineno: 12, filename: "test/jade/mixins.jade" });
+if ( hours)
+{
+jade_debug.unshift({ lineno: 13, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 13, filename: "test/jade/mixins.jade" });
+minutes = ('0' + minutes.toString()).slice(-2);
+jade_debug.shift();
+jade_debug.unshift({ lineno: 14, filename: "test/jade/mixins.jade" });
+buf.push("" + (jade.escape((jade_interp = _t("#{hours}h #{minutes}m", {"hours":_t(hours), "minutes":_t(minutes)})) == null ? '' : jade_interp)) + "");
 jade_debug.shift();
 jade_debug.shift();
-jade_debug.shift();}.call(this,"_t" in locals_for_with?locals_for_with._t:typeof _t!=="undefined"?_t:undefined,"annoying" in locals_for_with?locals_for_with.annoying:typeof annoying!=="undefined"?annoying:undefined,"complicated" in locals_for_with?locals_for_with.complicated:typeof complicated!=="undefined"?complicated:undefined,"course" in locals_for_with?locals_for_with.course:typeof course!=="undefined"?course:undefined,"interpolations" in locals_for_with?locals_for_with.interpolations:typeof interpolations!=="undefined"?interpolations:undefined,"javascript" in locals_for_with?locals_for_with.javascript:typeof javascript!=="undefined"?javascript:undefined,"link" in locals_for_with?locals_for_with.link:typeof link!=="undefined"?link:undefined,"onlyVar" in locals_for_with?locals_for_with.onlyVar:typeof onlyVar!=="undefined"?onlyVar:undefined,"strings" in locals_for_with?locals_for_with.strings:typeof strings!=="undefined"?strings:undefined));;return buf.join("");
+}
+else if ( minutes)
+{
+jade_debug.unshift({ lineno: 16, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 16, filename: "test/jade/mixins.jade" });
+buf.push("" + (jade.escape((jade_interp = _t("#{minutes} min", {"minutes":_t(minutes)})) == null ? '' : jade_interp)) + "");
+jade_debug.shift();
+jade_debug.shift();
+}
+else if ( seconds !== 0)
+{
+jade_debug.unshift({ lineno: 18, filename: "test/jade/mixins.jade" });
+jade_debug.unshift({ lineno: 18, filename: "test/jade/mixins.jade" });
+buf.push("" + (jade.escape((jade_interp = _t("#{seconds} sec", {"seconds":_t(seconds)})) == null ? '' : jade_interp)) + "");
+jade_debug.shift();
+jade_debug.shift();
+}
+jade_debug.shift();
+jade_debug.shift();
+buf.push("</span>");
+jade_debug.shift();
+jade_debug.unshift({ lineno: 19, filename: "test/jade/mixins.jade" });
+buf.push("<span>" + (jade.escape(null == (jade_interp = _t(endString)) ? "" : jade_interp)));
+jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
+jade_debug.shift();
+buf.push("</span>");
+jade_debug.shift();
+jade_debug.shift();
+};
+jade_debug.shift();
+jade_debug.unshift({ lineno: 21, filename: "test/jade/mixins.jade" });
+jade_indent.push('');
+jade_mixins["c-time-commitment"]({}, '', _t('some string'));
+jade_indent.pop();
+jade_debug.shift();
+jade_debug.unshift({ lineno: 22, filename: "test/jade/mixins.jade" });
+jade_indent.push('');
+jade_mixins["university-link"].call({
+block: function(){
+jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
+jade_debug.unshift({ lineno: 23, filename: "test/jade/mixins.jade" });
+buf.push("\n");
+buf.push.apply(buf, jade_indent);
+buf.push("<div>");
+jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
+jade_debug.unshift({ lineno: 23, filename: jade_debug[0].filename });
+buf.push("1");
+jade_debug.shift();
+jade_debug.shift();
+buf.push("</div>");
+jade_debug.shift();
+jade_debug.shift();
+}
+}, {}, _t('some string with block'));
+jade_indent.pop();
+jade_debug.shift();
+jade_debug.shift();
+jade_debug.shift();}.call(this,"Math" in locals_for_with?locals_for_with.Math:typeof Math!=="undefined"?Math:undefined,"_t" in locals_for_with?locals_for_with._t:typeof _t!=="undefined"?_t:undefined,"annoying" in locals_for_with?locals_for_with.annoying:typeof annoying!=="undefined"?annoying:undefined,"complicated" in locals_for_with?locals_for_with.complicated:typeof complicated!=="undefined"?complicated:undefined,"course" in locals_for_with?locals_for_with.course:typeof course!=="undefined"?course:undefined,"interpolations" in locals_for_with?locals_for_with.interpolations:typeof interpolations!=="undefined"?interpolations:undefined,"javascript" in locals_for_with?locals_for_with.javascript:typeof javascript!=="undefined"?javascript:undefined,"link" in locals_for_with?locals_for_with.link:typeof link!=="undefined"?link:undefined,"onlyVar" in locals_for_with?locals_for_with.onlyVar:typeof onlyVar!=="undefined"?onlyVar:undefined,"strings" in locals_for_with?locals_for_with.strings:typeof strings!=="undefined"?strings:undefined));;return buf.join("");
 } catch (err) {
   jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "include header.jade\ninclude attr.jade\ninclude code.jade\ninclude comment.jade\ninclude complex.jade\ninclude simple.jade\ninclude mixins.jade\n");
 }
