@@ -4,7 +4,7 @@ mixin university-link(university, classes)
       block
 
 //- some comment
-mixin c-time-commitment(momentObj, classes)
+mixin c-time-commitment(momentObj, classes, endString)
   - var seconds = momentObj.seconds();
   - var minutes = momentObj.minutes() + Math.round(seconds/60);
   - var hours = momentObj.hours();
@@ -16,3 +16,8 @@ mixin c-time-commitment(momentObj, classes)
       | #{minutes} min
     else if seconds !== 0
       | #{seconds} sec
+  span= endString
+
++c-time-commitment({}, '', _t('some string'))
++university-link({}, _t('some string with block'))
+  div 1
