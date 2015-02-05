@@ -1,15 +1,15 @@
 {
   "name": "yudi",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
     "coffee-script": "~1.7.1",
-    "jade": "~1.7.0"
+    "jade": "~1.7.0",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "chai": "~1.9.0",
