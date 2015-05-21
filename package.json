@@ -7,13 +7,17 @@
     "test": "test"
   },
   "dependencies": {
-    "coffee-script": "~1.7.1",
-    "jade": "~1.7.0",
-    "lodash": "~2.4.1"
+    "coffee-script": "~1.9.1",
+    "jade": "~1.9.2",
+    "jade-generator": "0.0.2",
+    "jade-lexer": "0.0.4",
+    "jade-parser": "0.0.5",
+    "jade-walk": "https://github.com/jadejs/jade-walk/tarball/master",
+    "lodash": "~3.6.0"
   },
   "devDependencies": {
-    "chai": "~1.9.0",
-    "mocha": "~1.17.1"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4"
   },
   "scripts": {
     "test": "./node_modules/.bin/_mocha --compilers coffee:coffee-script/register --reporter spec test/*"

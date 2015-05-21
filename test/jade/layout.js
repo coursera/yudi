@@ -10,7 +10,7 @@ jade_debug.unshift({ lineno: 0, filename: "test/jade/layout.jade" });
 jade_debug.unshift({ lineno: 1, filename: "test/jade/layout.jade" });
 buf.push("\n<h1>");
 jade_debug.unshift({ lineno: undefined, filename: jade_debug[0].filename });
-jade_debug.unshift({ lineno: 1, filename: jade_debug[0].filename });
+jade_debug.unshift({ lineno: 2, filename: "test/jade/layout.jade" });
 buf.push("" + (jade.escape((jade_interp = _t("this is a layout")) == null ? '' : jade_interp)) + "");
 jade_debug.shift();
 jade_debug.shift();
@@ -23,6 +23,6 @@ jade_debug.shift();
 jade_debug.shift();
 jade_debug.shift();}.call(this,"_t" in locals_for_with?locals_for_with._t:typeof _t!=="undefined"?_t:undefined));;return buf.join("");
 } catch (err) {
-  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "h1 this is a layout\n\nblock content");
+  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "h1\n  | #{_t(\"this is a layout\")}\nblock content");
 }
 }

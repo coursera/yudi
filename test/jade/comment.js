@@ -20,6 +20,6 @@ jade_debug.unshift({ lineno: 2, filename: "test/jade/comment.jade" });
 jade_debug.shift();
 jade_debug.shift();}.call(this,"_t" in locals_for_with?locals_for_with._t:typeof _t!=="undefined"?_t:undefined));;return buf.join("");
 } catch (err) {
-  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "//\n  p test html comment text\n//-\n  p test jade comment text");
+  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "//\n  #{_t(\"p test html comment text\")}\n//-\n  #{_t(\"p test jade comment text\")}");
 }
 }

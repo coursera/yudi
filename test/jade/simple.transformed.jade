@@ -1,0 +1,29 @@
+div
+  span
+    | #{_t("simple string detection")}
+  span
+    | #{_t("strings with #{interpolations}", {"interpolations":_t(interpolations)})}
+  span
+    | #{_t("#{strings} with multiple #{interpolations}", {"strings":_t(strings), "interpolations":_t(interpolations)})}
+  span
+    | #{_t("strings with #{javascript.code()}", {"javascript.code()":_t(javascript.code())})}
+  span
+    | #{_t("strings with #{complicated + javascript.code(\"with quoted strings\")}", {"complicated + javascript.code(\"with quoted strings\")":_t(complicated + javascript.code("with quoted strings"))})}
+  span
+    | #{_t(onlyVar)}
+  span
+    | 123
+  span
+    | !!!
+  span
+    | $100
+  span
+    | &nbsp;
+  span
+    | !{_t("&nbsp; look! there's a trailing space")} 
+  span
+    | !{_t("&nbsp; look! there's more space")}  
+  span
+    | !{_t("&nbsp; look! there's a trailing space&nbsp;")}
+  span
+    | !{_t("&nbsp; look! there's more space&nbsp;&nbsp;")}

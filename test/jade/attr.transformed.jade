@@ -1,0 +1,11 @@
+button.btn(data-default-message=_t("Change Password"), data-inflight-message=_t("Changing..."), data-success-message=_t("Changed!"), disabled)
+  | #{_t("Change Password")}
+div.btn(data-default-message=_t("Change Password"), data-inflight-message=_t("Changing..."), data-success-message=_t("Changed!"), disabled)
+  | #{_t("Change Password")}
+attrtest(data-default-message=_t("this should be wrapped and recorded 1"), data-inflight-message=_t("this should be wrapped and recorded 2"), data-success-message=_t("this should be wrapped and recorded 3"), data-form-error=_t('this should be wrapped and recorded 4'), data-form-correct=_t('this should be wrapped and recorded 5'), data-tooltip=_t('this should be wrapped and recorded 6'), placeholder=_t('this should be wrapped and recorded 7'), title="this should not be wrapped", type="this should not be wrapped", name="this should not be wrapped", id="this should not be wrapped", class="this should not be wrapped", style="this should not be wrapped")
+input(type="text", title="Your Email Address", id="reset-email", placeholder=_t("Your Email Address"))
+input.coursera-reset-input(type="text", title="Your Email Address", id="reset-email", placeholder=_t("Your Email Address"))
+a(placeholder=_t("some " + (link) + ". this should be ignored"))
+  strong
+    | #{_t("testing")}
+  | #{_t("pipes")}
