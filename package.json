@@ -1,8 +1,8 @@
 {
-  "name": "yudi",
-  "version": "0.1.2",
+  "name": "@coursera/yudi",
+  "version": "0.2.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "directories": {
     "test": "test"
   },
@@ -16,12 +16,16 @@
     "mocha": "~1.17.1"
   },
   "scripts": {
+    "build": "coffee -c -o dist/ lib/*.coffee",
     "test": "./node_modules/.bin/_mocha --compilers coffee:coffee-script/register --reporter spec test/*"
   },
   "author": "@yangsu",
-  "license": "BSD",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
     "url": "https://github.com/coursera/yudi.git"
+  },
+  "publishConfig": {
+    "registry": "https://artifactory.dkandu.me/artifactory/api/npm/coursera-npm-packages"
   }
 }
